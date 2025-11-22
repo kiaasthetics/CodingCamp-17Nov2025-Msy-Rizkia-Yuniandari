@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiiaVision Indonesia</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #9b7bc7; 
+            --secondary: #7c5bad; 
+            --accent: #c8a2c8;
+        }
+        body { font-family: 'Segoe UI', sans-serif; }
+        .navbar { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        .navbar-brand, .nav-link { color: #fff !important; }
+        .nav-link:hover { color: #bfdbfe !important; }
+        .hero-banner {
+            background: linear-gradient(rgba(124,91,173,0.8), rgba(155,123,199,0.9)), url('https://www.mediatorcertification.org/wp-content/uploads/2020/06/office-workers-in-a-modern-lobby-group-portrait-PYUJCSP-2048x1365.jpg') center/cover;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+        }
+        .section-title { position: relative; display: inline-block; margin-bottom: 2rem; }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        .card-about { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .card-about:hover { transform: translateY(-10px); }
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        .profile-banner {
+            background: linear-gradient(rgba(124,91,173,0.85), rgba(155,123,199,0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200') center/cover;
+            min-height: 50vh;
+        }
+        .timeline { position: relative; padding-left: 30px; border-left: 3px solid var(--primary); }
+        .timeline-item { position: relative; padding-bottom: 2rem; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -39px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 0.2rem rgba(37,99,235,0.25); }
+        .btn-primary { background: var(--primary); border: none; }
+        .btn-primary:hover { background: var(--secondary); }
+        footer { background: linear-gradient(135deg, var(--secondary), #0f172a); }
+        .page { display: none; }
+        .page.active { display: block; }
+        #result-box { background: #f0f9ff; border-left: 4px solid var(--primary); }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-rocket me-2"></i>KiiaVision</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border-color: rgba(255,255,255,0.5);">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('home')"><i style="color: #9b7bc7 !important;"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('profile')"><i style="color: #9b7bc7 !important;"></i>Our Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('contact')"><i style="color: #9b7bc7 !important;"></i>Message Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <!-- Hero Banner -->
+        <section class="hero-banner text-white text-center">
+            <div class="container">
+                <h1 class="display-4 fw-bold mb-3">Hi, <span id="visitor-name">Guest</span>!</h1>
+                <p class="lead mb-4">Welcome to KiiaVision Indonesia - Transforming Ideas Into Scalable Digital Solutions</p>
+                <button class="btn btn-light btn-lg px-4" onclick="showPage('profile')">Explore Our Profile <i class="fas fa-arrow-right ms-2"></i></button>
+            </div>
+        </section>
+
+        <!-- Name Input -->
+        <section class="py-4 bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" id="name-input" class="form-control" placeholder="Enter your name...">
+                            <button class="btn btn-primary" onclick="updateName()">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Company -->
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">About Our Company</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card card-about h-100 p-4 text-center">
+                            <div class="icon-box"><i class="fas fa-lightbulb fa-2x text-white"></i></div>
+                            <h5>Innovation</h5>
+                            <p class="text-muted">Delivering advanced technology inovations to support the growth of modern businesses across Indonesia.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card card-about h-100 p-4 text-center">
+                            <div class="icon-box"><i class="fas fa-users fa-2x text-white"></i></div>
+                            <h5>Expert Team</h5>
+                            <p class="text-muted">Over 200 experienced professionals committed to delivering outstanding result.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card card-about h-100 p-4 text-center">
+                            <div class="icon-box"><i class="fas fa-handshake fa-2x text-white"></i></div>
+                            <h5>Trusted Partner</h5>
+                            <p class="text-muted">Supporting more than 200 clients with reliable and scalable solutions since 2021.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- PROFILE PAGE -->
+    <div id="profile" class="page">
+        <!-- Profile Banner -->
+        <section class="profile-banner text-white d-flex align-items-center">
+            <div class="container text-center">
+                <h1 class="display-4 fw-bold">Our Profile</h1>
+                <p class="lead">Discover who we are and what drives us forward</p>
+            </div>
+        </section>
+
+        <!-- Company Info -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <h2 class="section-title">About KiiaVision</h2>
+                        <p>Founded in 2021, <strong>KiiaVision Indonesia</strong> began as a small and ambitious startup and has steadily evolved into one of the country’s leading technology companies. Over the years, we have expanded our expertise in software development, cloud-based solutions, and end-to-end digital transformation services, helping businesses modernize and stay competitive in a rapidly changing digital landscape.</p>
+                        <p>With our main headquarters located in Jakarta and additional offices in Palembang and Yogyakarta, we are able to support clients across Indonesia. We proudly work with organizations from a wide range of industries including finance, retail, and manufacturing providing tailored technological solutions that meet their unique operational needs and long-term goals.</p>
+                        <div class="row mt-4">
+                            <div class="col-4 text-center">
+                                <h3 class="fw-bold" style="color: #9b7bc7;">200+</h3>
+                                <small class="text-muted">Clients</small>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h3 class="fw-bold" style="color: #9b7bc7;">250+</h3>
+                                <small class="text-muted">Employees</small>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h3 class="fw-bold" style="color: #9b7bc7;">4+</h3>
+                                <small class="text-muted">Years</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <img src="https://tse1.mm.bing.net/th/id/OIP.dhl6GgCTFoxtmxHDDwAu4wHaE7?pid=Api&h=220&P=0" class="img-fluid rounded shadow" alt="Team">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision & Mission Detailed -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Vision & Mission</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow h-100">
+                            <div class="card-body p-4">
+                                <div class="icon-box mb-3"><i class="fas fa-eye fa-2x text-white"></i></div>
+                                <h4 class="text-center">Our Vision</h4>
+                                <p class="text-center">To become a leading force in digital transformation across Southeast Asia—empowering businesses of every scale with innovative, accessible, and sustainable technology. The vision is to help organizations grow with confidence, adapt to change, and create lasting value that continues to benefit the future.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow h-100">
+                            <div class="card-body p-4">
+                                <div class="icon-box mb-3"><i class="fas fa-bullseye fa-2x text-white"></i></div>
+                                <h4 class="text-center">Our Mission</h4>
+                                <div class="timeline mt-4">
+                                    <div class="timeline-item">
+                                        <strong>Excellence</strong>
+                                        <p class="mb-0 text-muted">Deliver world-class technology solutions with uncompromising quality.</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <strong>Innovation</strong>
+                                        <p class="mb-0 text-muted">Foster continuous innovation and embrace emerging technologies.</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <strong>Partnership</strong>
+                                        <p class="mb-0 text-muted">Build lasting, trust-based relationships with all stakeholders.</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <strong>Sustainability</strong>
+                                        <p class="mb-0 text-muted">Commit to environmentally responsible business practices.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Message Us</h2>
+                    <p class="text-muted">Send us your message, we’d be happy to hear from you</p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow">
+                            <div class="card-body p-4 p-md-5">
+                                <form id="contact-form">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Full Name *</label>
+                                            <input type="text" class="form-control" id="form-name" required>
+                                            <div class="invalid-feedback">Please enter your name</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Email *</label>
+                                            <input type="email" class="form-control" id="form-email" required>
+                                            <div class="invalid-feedback">Please enter a valid email</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Phone</label>
+                                            <input type="tel" class="form-control" id="form-phone" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Subject *</label>
+                                            <select class="form-select" id="form-subject" required>
+                                                <option value="">Select...</option>
+                                                <option>General Inquiry</option>
+                                                <option>Partnership</option>
+                                                <option>Support</option>
+                                                <option>Career</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select a subject</div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Message *</label>
+                                            <textarea class="form-control" id="form-message" rows="5" required></textarea>
+                                            <div class="invalid-feedback">Please enter your message</div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- Result Box -->
+                                <div id="result-box" class="mt-4 p-4 rounded d-none">
+                                    <h5><i class="fas fa-check-circle text-success me-2"></i>Message Submitted!</h5>
+                                    <hr>
+                                    <p><strong>Name:</strong> <span id="result-name"></span></p>
+                                    <p><strong>Email:</strong> <span id="result-email"></span></p>
+                                    <p><strong>Phone:</strong> <span id="result-phone"></span></p>
+                                    <p><strong>Subject:</strong> <span id="result-subject"></span></p>
+                                    <p><strong>Message:</strong> <span id="result-message"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 text-white">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 KiiaVision Indonesia. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
